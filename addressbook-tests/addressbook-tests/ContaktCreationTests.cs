@@ -43,10 +43,11 @@ namespace WebAddressbookTests
         public void ContaktCreationTest()
         {
             OpenHomePage();
-            Login("admin", "secret");
+            Login(new AccountData("admin", "secret"));
             GoToContaktsPage();
             //InitContaktCreation();
-            FillContaktForm("John", "Smith", "DMX");
+            ContaktData contakt = new ContaktData("John", "Smith");
+            FillContaktForm(contakt);
             SubmitContaktCreation();
             OpenHomePage();
             //ReturnToContaktsPage();
@@ -62,15 +63,15 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("submit")).Click();
         }
 
-        private void FillContaktForm(string firstname, string lastname, string nickname)
+        private void FillContaktForm(ContaktData contakt)
         {
             driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(firstname);
+            driver.FindElement(By.Name("firstname")).SendKeys(contakt.Firstname);
             driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(lastname);
-            driver.FindElement(By.Name("nickname")).Clear();
+            driver.FindElement(By.Name("lastname")).SendKeys(contakt.Lastname);
+            /*driver.FindElement(By.Name("nickname")).Clear();
             driver.FindElement(By.Name("nickname")).SendKeys(nickname);
-            /*driver.FindElement(By.Name("group_header")).Click();
+            driver.FindElement(By.Name("group_header")).Click();
             driver.FindElement(By.Name("group_header")).Clear();
             driver.FindElement(By.Name("group_header")).SendKeys(groupheader);
             driver.FindElement(By.Name("group_footer")).Click();
@@ -88,13 +89,13 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("add new")).Click();
         }
 
-        private void Login(string username, string password)
+        private void Login(AccountData account)
         {
             driver.FindElement(By.Name("user")).Click();
             driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(username);
+            driver.FindElement(By.Name("user")).SendKeys(account.Username);
             driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(password);
+            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
             driver.FindElement(By.Id("LoginForm")).Submit();
         }
 
